@@ -1,12 +1,15 @@
 class CleanupTotal {
-    _errorCount:number;
-    _cleanupList: Array<Function>;
+    private _errorCount:number;
+    private _cleanupList: Array<Function>;
 
     constructor() {
         this._cleanupList = [];
         this._errorCount = 0;
     }
 
+    /**
+     * @deprecated Don't use this method if *wdio-cleanuptotal-service* is enabled.
+     */
     initialize() {
         this._cleanupList = new Array<Function>();
         this._errorCount = 0;
@@ -21,13 +24,8 @@ class CleanupTotal {
     }
 
     /**
-     * Insert a cleanup function that will execute last. Usually you'll want to use 'addCleanup'. 
-     * @param cleanupFunction 
+     * @deprecated Don't use this method if *wdio-cleanuptotal-service* is enabled.
      */
-    insertCleanup(cleanupFunction: Function): void {
-        this._cleanupList.unshift(cleanupFunction);
-    }
-
     async finalize(): Promise<void> {
         let message = "";
 

@@ -1,7 +1,7 @@
 # cleanup-total
 
 With this plugin for [webdriver.io](https://webdriver.io/) it is easy to properly cleanup after each test.
-Cleanup after test might get complicated. For example: Lets say you are creating a bank account and then deposit there some money. If you try to delete the account you'd probably get a refusion because the account is not empty. <b>cleanup-total</b> helps you to do it systematically by 'marking' each entity you create for deletion right after its creation. When the test is finished, <b>cleanup-total</b> would delete the deposit and the account in the right order.
+Cleanup after test might get complicated. For example: Lets say you are creating a bank account and then adding an investment plan and depositing there some money. If you try to delete the account you'd probably get a refusion because the account is not empty. <b>cleanup-total</b> helps you to do it systematically by 'marking' each entity you create for deletion right after its creation. When the test is finished, <b>cleanup-total</b> would delete the investment plan, the deposit and the account in the right order.
 
 <h2>Installation</h2>
 The easiest way to install this module as a (dev-)dependency is by using the following command:
@@ -26,23 +26,6 @@ exports.config = {
   // ...
 };
 ```
-...or with the service options:
-
-```
-exports.config = {
-  // ...
-  services: [
-      ['cleanuptotal',
-      // The options (with default values)
-        {
-           
-        }]
-      ]
-  // ...
-};
-```
-
-<h2>Options</h2>
 
 <h2>Usage in test</h2>
 
@@ -53,17 +36,23 @@ import { cleanuptotal } from "wdio-cleanuptotal-service";
 
 it("should keep things tidy", () => {
             // ...
+
             const accountId = createAccount("John Blow");
             
-            cleanupTotal.addCleanup(async () => { await deleteAccountByUserId(accountId) }); // TODO: mark for deletion * 
+            cleanupTotal.addCleanup(async () => { await deleteAccount(accountId) }); // TODO: mark for deletion * 
 
+            addInvestmentPlan(accountId, "ModRisk");
+
+            cleanupTotal.addCleanup(async () => { await removeInvestmentPlan(accountId) }); // TODO: mark for deletion *
+            
             deposit(accountId, 1000000);
 
-            cleanupTotal.addCleanup(async () => { await deleteAccountByUserId(accountId) }); // TODO: mark for deletion *
+            cleanupTotal.addCleanup(async () => { await removeDeposit(accountId) }); // TODO: mark for deletion *
+
             //...
         });
 
-        // TODO: * The actual execution of the cleanup code would take palce AFTER test completion.
+        // TODO: * Please note that the actual execution of the cleanup code would take palce AFTER test completion.
 ```
 
 <h2>Typescript support</h2>
