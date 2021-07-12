@@ -1,7 +1,7 @@
 # cleanup-total
 
 With this plugin for [webdriver.io](https://webdriver.io/) it is easy to properly cleanup after each test.
-Cleanup after test might get complicated. For example: Lets say you are creating a bank account and then deposit there some money. If you try to delete the account you'd probably get a refusion because the account is not empty. <b>cleanup-total</b> helps you to do it systematically by 'marking' each entity you create for deletion right after you creating it. When the test is finished, <b>cleanup-total</b> would delete the deposit and the account in the right order.
+Cleanup after test might get complicated. For example: Lets say you are creating a bank account and then deposit there some money. If you try to delete the account you'd probably get a refusion because the account is not empty. <b>cleanup-total</b> helps you to do it systematically by 'marking' each entity you create for deletion right after its creation. When the test is finished, <b>cleanup-total</b> would delete the deposit and the account in the right order.
 
 <h2>Installation</h2>
 The easiest way to install this module as a (dev-)dependency is by using the following command:
@@ -63,7 +63,7 @@ it("should keep things tidy", () => {
             //...
         });
 
-        // * The actual execution of the cleanup code would take palce AFTER test completion.
+        // TODO: * The actual execution of the cleanup code would take palce AFTER test completion.
 ```
 
 <h2>Typescript support</h2>
