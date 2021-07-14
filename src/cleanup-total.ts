@@ -30,19 +30,19 @@ class CleanupTotal {
         let message = "";
         const processId = process.pid;
 
-        this.printToLog(`CleanupTotal [processId:${processId}]: ##### Cleanup initialized #####`, serviceOptions);
+        this.printToLog(`CleanupTotal [${processId}]: ##### Cleanup initialized #####`, serviceOptions);
 
         this._cleanupList.reverse();
 
         for (let i = 0; i < this._cleanupList.length; i++) {
             try {
                 await this._cleanupList[i]();
-                message = `CleanupTotal [🙂 processId:${processId}]: Successfully executed '${this._cleanupList[i].toString()}'`;
+                message = `CleanupTotal [🙂 ${processId}]: Successfully executed '${this._cleanupList[i].toString()}'`;
             }
             catch (ex) {
                 this._errorCount++;
 
-                message = `CleanupTotal [😕 processId:${processId}]: Failed to execute '${this._cleanupList[i].toString()}: ${ex}'`;
+                message = `CleanupTotal [😕 ${processId}]: Failed to execute '${this._cleanupList[i].toString()}: ${ex}'`;
             }
             finally {
                 this.printToLog(message, serviceOptions)
@@ -52,10 +52,10 @@ class CleanupTotal {
         this._cleanupList.length = 0;
 
         if(this._errorCount > 0) {
-            console.log(`CleanupTotal: Warning!!!: Cleanup for process ${processId} finished with ${this._errorCount} errors`);
+            console.log(`CleanupTotal: Warning!!!: Cleanup for [${processId}] finished with ${this._errorCount} errors`);
         }
 
-        this.printToLog(`CleanupTotal [processId:${processId}]: ### Cleanup done ###`, serviceOptions)
+        this.printToLog(`CleanupTotal [${processId}]: ### Cleanup done ###`, serviceOptions);
     }
 
     private printToLog(message: string, serviceOptions: { customLoggerMethod: Function}) {
