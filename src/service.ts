@@ -1,18 +1,9 @@
 import cleanupTotal from "./cleanup-total";
 
-enum Status {
-    UNKNOWN = 0,
-    PASSED = 1,
-    SKIPPED = 2,
-    PENDING = 3,
-    UNDEFINED = 4,
-    AMBIGUOUS = 5,
-    FAILED = 6
-}
 
 export default class CleanupTotalService {
     browser: WebdriverIO.Browser;
-    _serviceOptions: { };
+    _serviceOptions: {loggerMethod: Function };
     /**
      * `serviceOptions` contains all options specific to the service
      * e.g. if defined as follows:
@@ -23,7 +14,7 @@ export default class CleanupTotalService {
      *
      * the `serviceOptions` parameter will be: `{ foo: 'bar' }`
      */
-    constructor(serviceOptions: { }, capabilities: any, config: any, browser: WebdriverIO.Browser) {
+    constructor(serviceOptions: { loggerMethod: Function}, capabilities: any, config: any, browser: WebdriverIO.Browser) {
         this.browser = browser
         this._serviceOptions = serviceOptions;
     }
@@ -41,11 +32,11 @@ export default class CleanupTotalService {
     }
 
     async afterTest(test: any, context: any, { error, result, duration, passed, retries }: any) {
-        await cleanupTotal.finalize();
+        await cleanupTotal.finalize(this._serviceOptions);
     }
 
     async afterScenario({ result }: any) {
-        await cleanupTotal.finalize();
+        await cleanupTotal.finalize(this._serviceOptions);
     }
 
     async after(exitCode: any, config: any, capabilities: any) {

@@ -26,7 +26,7 @@ class CleanupTotal {
     /**
      * @deprecated Don't use this method if *wdio-cleanuptotal-service* is enabled.
      */
-    async finalize(): Promise<void> {
+    async finalize(serviceOptions: { loggerMethod: Function}): Promise<void> {
         let message = "";
 
         this._cleanupList.reverse();
@@ -43,6 +43,14 @@ class CleanupTotal {
             }
             finally {
                 console.log(message);
+                if(serviceOptions?.loggerMethod != undefined) {
+                    try {
+                        serviceOptions.loggerMethod(message);
+                    }
+                    catch(err) {
+                        console.log(`CleanupTotal: printing to custom logger ${serviceOptions.loggerMethod.name} failed: ${err}`);
+                    }
+                }
             }
         }
 

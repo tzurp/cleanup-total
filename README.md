@@ -7,11 +7,6 @@ Cleanup after test might get complicated. For example: Lets say you are creating
 The easiest way to install this module as a (dev-)dependency is by using the following command:
 
 ```
-npm install wdio-cleanuptotal-service --save
-```
-Or:
-
-```
 npm install wdio-cleanuptotal-service --save-dev
 ```
 
@@ -23,6 +18,20 @@ Add wdio-cleanuptotal-service to your `wdio.conf.js`:
 exports.config = {
   // ...
   services: ['cleanuptotal']
+  // ...
+};
+```
+or with the service options:
+
+```
+exports.config = {
+  // ...
+  services: [
+      ['cleanuptotal',
+        {
+            loggerMethod: (m) => {console.log(`CustomLogger: ${m}`)} // TODO: you can put here any logger function
+        }]
+      ]
   // ...
 };
 ```
