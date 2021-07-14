@@ -3,7 +3,7 @@ import cleanupTotal from "./cleanup-total";
 
 export default class CleanupTotalService {
     browser: WebdriverIO.Browser;
-    _serviceOptions: {loggerMethod: Function };
+    _serviceOptions: {customLoggerMethod: Function };
     /**
      * `serviceOptions` contains all options specific to the service
      * e.g. if defined as follows:
@@ -14,7 +14,7 @@ export default class CleanupTotalService {
      *
      * the `serviceOptions` parameter will be: `{ foo: 'bar' }`
      */
-    constructor(serviceOptions: { loggerMethod: Function}, capabilities: any, config: any, browser: WebdriverIO.Browser) {
+    constructor(serviceOptions: { customLoggerMethod: Function}, capabilities: any, config: any, browser: WebdriverIO.Browser) {
         this.browser = browser
         this._serviceOptions = serviceOptions;
     }

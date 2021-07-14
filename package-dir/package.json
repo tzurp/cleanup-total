@@ -1,0 +1,24 @@
+{
+  "name": "wdio-cleanuptotal-service",
+  "version": "1.0.1-2",
+  "description": "WebdriverIO cleanup service",
+  "main": "build/app.js",
+  "types": "build/app.d.ts",
+  "files": [
+    "/build/src",
+    "/build/app.d.ts",
+    ""
+  ],
+  "keywords": [
+    "wdio-plugin",
+    "wdio-service",
+    "cleanup"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "npx wdio wdio.conf.ts"
+  },
+  "author": "Tzur Paldi",
+  "license": "ISC"
+}
