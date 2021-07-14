@@ -27,6 +27,10 @@ class CleanupTotal {
      * @deprecated Don't use this method if *wdio-cleanuptotal-service* is enabled.
      */
     async finalize(serviceOptions: { customLoggerMethod: Function}): Promise<void> {
+        if (this._cleanupList.length <= 0 ) {
+            return;
+        }
+
         let message = "";
         const processId = process.pid;
 
