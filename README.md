@@ -29,7 +29,7 @@ exports.config = {
   services: [
       ['cleanuptotal',
         {
-          // TODO: you can put here any logger function
+          // TODO: you can put here any logger function. e.g. ()=> {}
             customLoggerMethod: allureReporter.addStep
         }]
       ]

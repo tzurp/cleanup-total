@@ -63,8 +63,6 @@ class CleanupTotal {
     }
 
     private printToLog(message: string, serviceOptions: { customLoggerMethod: Function}) {
-        console.log(message);
-
         if(serviceOptions?.customLoggerMethod != undefined) {
             try {
                 serviceOptions.customLoggerMethod(message);
@@ -72,6 +70,9 @@ class CleanupTotal {
             catch(err) {
                 console.log(`CleanupTotal: printing to custom logger ${serviceOptions.customLoggerMethod.name} failed: ${err}`);
             }
+        }
+        else {
+            console.log(message);
         }
     }
 }
