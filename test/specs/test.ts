@@ -13,6 +13,10 @@ describe("Cleanup_sanity", () => {
         
         cleanupTotal.addCleanup(()=> console.log("Remove investment plan"));
 
+        console.log("Intentional Error...");
+        
+        cleanupTotal.addCleanup(()=> {throw new Error("Dummy Error")});
+
         console.log("Depositing money...");
         
         cleanupTotal.addCleanup(() => console.log("Remove deposit"));
