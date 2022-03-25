@@ -7,5 +7,5 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-    cleanupTotal.finalize({customLoggerMethod: (m: string)=> console.log("CustomLogger: " + m)});
+    cleanupTotal.finalize({customLoggerMethod: (m: string)=> console.log("CustomLogger: " + m), logErrorsOnly: false});
 });
