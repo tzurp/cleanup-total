@@ -1,3 +1,5 @@
+import { ServiceOptions } from "./service-options";
+
 export class Logger {
     private _serviceOptions: ServiceOptions;
 

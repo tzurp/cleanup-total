@@ -1,4 +1,5 @@
 import cleanupTotal from "./cleanup-total";
+import { ServiceOptions } from "./service-options";
 
 
 export default class CleanupTotalService {
