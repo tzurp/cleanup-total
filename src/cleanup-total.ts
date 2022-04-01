@@ -1,4 +1,5 @@
 import { Logger } from "./logger";
+import { ServiceOptions } from "./service-options";
 
 class CleanupTotal {
     private _errorCount: number;
