@@ -8,7 +8,7 @@ export class Logger {
     }
 
     printToLog(message: string, isMandatory: boolean) {
-        if (isMandatory || !isMandatory && !this._serviceOptions.logErrorsOnly) {
+        if (isMandatory || !this._serviceOptions.logErrorsOnly) {
             if (this._serviceOptions?.customLoggerMethod != undefined) {
                 try {
                     this._serviceOptions.customLoggerMethod(message);

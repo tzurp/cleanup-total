@@ -1,7 +1,6 @@
 # cleanup-total
 
-With this plugin for [webdriver.io](https://webdriver.io/) it is easy to properly cleanup after each test.
-Cleanup after test might get complicated. For example: Lets say you are creating a bank account and then adding an investment plan and depositing there some money. If you try to delete the account you'd probably get a refusion because the account is not empty. <b>cleanup-total</b> helps you to do it systematically by 'marking' each entity you create for deletion right after its creation. When the test is finished, <b>cleanup-total</b> would delete the investment plan, the deposit and the account in the right order.
+With the `cleanup-total` service for [webdriver.io](https://webdriver.io/), you can easily ensure proper cleanup after each test. The service provides a systematic way to mark entities for deletion immediately after creation. This is particularly useful when tests involve creating complex structures, such as a bank account with an investment plan and a deposit. Without proper cleanup, attempting to delete the account may result in errors, such as a refusal due to the account not being empty. However, with <b>cleanup-total</b>, entities are deleted in the correct order, ensuring that tests clean up after themselves and do not interfere with each other.
 
 <h2>Installation</h2>
 The easiest way to install this module as a (dev-)dependency is by using the following command:
@@ -16,56 +15,70 @@ Add wdio-cleanuptotal-service to your `wdio.conf.js`:
 
 ```
 exports.config = {
-  // ...
+  // ... other options
+
   services: ['cleanuptotal']
-  // ...
+
+  // ... other options
 };
 ```
+
 or with the service options:
 
 ```
 exports.config = {
-  // ...
+  // ... other options
+
   services: [
-      ['cleanuptotal',
-        {
-            // TODO: You can put here any logger function.
-            // TODO: e.g. ()=> {}. Default is 'console.log()'.
-            customLoggerMethod: allureReporter.addStep,
-            // TODO: Write to the log on error only. Default is 'false'.
-            logErrorsOnly: false
-        }]
-      ]
-  // ...
+    [
+      'cleanuptotal',
+      {
+        // Use a custom logger function to write messages to the test report
+        customLoggerMethod: console.log(), // TODO: replace with your own logger function if needed
+
+        // Only write to the log when an error occurs to reduce clutter
+        logErrorsOnly: false, // TODO: consider changing to 'true' if you have too many messages in the report
+      }
+    ]
+  ]
+
+  // ... other options
 };
 ```
 
 <h2>Usage in test</h2>
 
-Just import <b>cleanuptotal</b> where you need it, whether it be your test file or any other class:
+You can import the <b>cleanuptotal</b> service wherever it's needed, whether it's in your test file or any other class.
 
 ```
 import { cleanuptotal } from "wdio-cleanuptotal-service";
 
 it("should keep things tidy", () => {
-            // ...
+  // ...
 
-            const accountId = createAccount("John Blow");
-            
-            cleanupTotal.addCleanup(async () => { await deleteAccount(accountId) }); // TODO: mark for deletion * 
+  // Create an account and add it to the cleanup list for deletion after the test
+  const accountId = createAccount("John Blow");
+  cleanupTotal.addCleanup(async () => {
+    await deleteAccount(accountId);
+  });
 
-            addInvestmentPlan(accountId, "ModRisk");
+  // Add an investment plan to the account and add it to the cleanup list
+  addInvestmentPlan(accountId, "ModRisk");
+  cleanupTotal.addCleanup(async () => {
+    await removeInvestmentPlan(accountId);
+  });
 
-            cleanupTotal.addCleanup(async () => { await removeInvestmentPlan(accountId) }); // TODO: mark for deletion *
-            
-            deposit(accountId, 1000000);
+  // Deposit funds into the account and add it to the cleanup list
+  deposit(accountId, 1000000);
+  cleanupTotal.addCleanup(async () => {
+    await undoDeposit(accountId);
+  });
 
-            cleanupTotal.addCleanup(async () => { await removeDeposit(accountId) }); // TODO: mark for deletion *
+  // ...
 
-            //...
-        });
+});
 
-        // TODO: * Please note that the actual execution of the cleanup code would take palce AFTER test completion.
+// Note that the actual cleanup code will be executed after the test is complete
 ```
 
 <h2>Typescript support</h2>
