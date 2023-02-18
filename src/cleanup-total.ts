@@ -2,12 +2,10 @@ import { Logger } from "./logger";
 import { ServiceOptions } from "./service-options";
 
 class CleanupTotal {
-    private _errorCount: number;
     private _cleanupList: Array<Function>;
 
     constructor() {
         this._cleanupList = [];
-        this._errorCount = 0;
     }
 
     /**
@@ -15,7 +13,6 @@ class CleanupTotal {
      */
     initialize() {
         this._cleanupList = new Array<Function>();
-        this._errorCount = 0;
     }
 
     /**
@@ -34,6 +31,7 @@ class CleanupTotal {
             return;
         }
 
+        const errors = [];
         const logger = new Logger(serviceOptions);
         const processId = process.pid;
 
@@ -49,20 +47,23 @@ class CleanupTotal {
 
                 logger.printToLog(message, false);
             }
-            catch (ex) {
-                this._errorCount++;
+            catch (err: any) {
 
-                const message = `CleanupTotal [😕 ${processId}]: Failed to execute '${this._cleanupList[i].toString()}: ${ex}'`;
+                const message = `CleanupTotal [😕 ${processId}]: Failed to execute '${this._cleanupList[i].toString()}': ${err.message}, ${err.stack}`;
 
-                logger.printToLog(message, true);
+                errors.push(message);
             }
         }
 
-        this._cleanupList.length = 0;
+        if (errors.length > 0) {
+            logger.printToLog(`CleanupTotal: Warning!!!: Cleanup for [${processId}] finished with ${errors.length} error(s):`, true);
 
-        if (this._errorCount > 0) {
-            logger.printToLog(`CleanupTotal: Warning!!!: Cleanup for [${processId}] finished with ${this._errorCount} errors`, true);
+            errors.forEach(error => {
+                logger.printToLog(error, true);
+            });
         }
+
+        this._cleanupList.length = 0;
 
         logger.printToLog(`CleanupTotal [${processId}]: ### Cleanup done ###`, false);
     }
