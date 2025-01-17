@@ -1,20 +1,20 @@
 # cleanup-total
 
-With the `cleanup-total` service for [webdriver.io](https://webdriver.io/), you can easily ensure proper cleanup after each test. The service provides a systematic way to mark entities for deletion immediately after creation. This is particularly useful when tests involve creating complex structures, such as a bank account with an investment plan and a deposit. Without proper cleanup, attempting to delete the account may result in errors, such as a refusal due to the account not being empty. However, with <b>cleanup-total</b>, entities are deleted in the correct order, ensuring that tests clean up after themselves and do not interfere with each other.
+With the `cleanup-total` service for [webdriver.io](https://webdriver.io/), you can easily ensure proper cleanup after each test. The service provides a systematic way to mark entities for deletion immediately after creation. This is particularly useful when tests involve creating complex structures, such as a bank account with an investment plan and a deposit. Without proper cleanup, attempting to delete the account may result in errors, such as a refusal due to the account not being empty. However, with __cleanup-total__, entities are deleted in the correct order, ensuring that tests clean up after themselves and do not interfere with each other.
 
-<h2>Installation</h2>
+## Installation
 The easiest way to install this module as a (dev-)dependency is by using the following command:
 
 ```
 npm install wdio-cleanuptotal-service --save-dev
 ```
 
-<h2>Usage</h2>
+## Usage
 
-Add wdio-cleanuptotal-service to your `wdio.conf.js`:
+Add wdio-cleanuptotal-service to your `wdio.conf.ts`:
 
-```
-exports.config = {
+```typescript
+export const config: WebdriverIO.Config = {
   // ... other options
 
   services: ['cleanuptotal']
@@ -25,8 +25,8 @@ exports.config = {
 
 or with the service options:
 
-```
-exports.config = {
+```typescript
+export const config: WebdriverIO.Config = {
   // ... other options
 
   services: [
@@ -46,11 +46,11 @@ exports.config = {
 };
 ```
 
-<h2>Usage in test</h2>
+## Usage in test
 
-You can import the <b>cleanuptotal</b> service wherever it's needed, whether it's in your test file or any other class.
+You can import the __cleanuptotal__ service wherever it's needed, whether it's in your test file or any other class.
 
-```
+```typescript
 import { cleanuptotal } from "wdio-cleanuptotal-service";
 
 it("should keep things tidy", () => {
@@ -81,6 +81,10 @@ it("should keep things tidy", () => {
 // Note that the actual cleanup code will be executed after the test is complete
 ```
 
-<h2>Typescript support</h2>
+## Typescript support
 
 Typescript is supported for this plugin.
+
+## Support
+
+For support and suggestions, feel free to contact me at [tzur.paldi@outlook.com](mailto:tzur.paldi@outlook.com).
