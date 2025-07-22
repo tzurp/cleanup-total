@@ -1,7 +1,15 @@
 {
   "name": "wdio-cleanuptotal-service",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "WebdriverIO cleanup service",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tzurp/cleanup-total.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tzurp/cleanup-total/issues"
+  },
+  "homepage": "https://github.com/tzurp/cleanup-total#readme",
   "main": "build/app.js",
   "types": "build/app.d.ts",
   "files": [
